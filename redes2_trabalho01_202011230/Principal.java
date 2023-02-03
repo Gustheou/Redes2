@@ -48,7 +48,7 @@ public class Principal extends Application{
     ControleMenu cM = new ControleMenu();
     stage = cenario;
     cenario.setTitle("Algoritmo de roteamento");
-    Parent fxmlTelaInicial = FXMLLoader.load(getClass().getResource("TelaMenu.fxml"));
+    Parent fxmlTelaInicial = FXMLLoader.load(getClass().getResource("mediaView.fxml"));
     telaMenu = new Scene (fxmlTelaInicial);
     //Parent fxmlTelaSecundaria = FXMLLoader.load(getClass().getResource("TelaSecundaria.fxml"));
     //telaSecundaria = new Scene (fxmlTelaSecundaria);
@@ -69,7 +69,7 @@ public class Principal extends Application{
     
     cenario.setResizable(false);
     cenario.getIcons().add(new Image("Imagens/host.png"));
-    cenario.setScene(telaMenu);
+   // cenario.setScene(telaMenu);
     cenario.show();
   }//Fim do metodo start
 
@@ -87,5 +87,9 @@ public class Principal extends Application{
 
   public static void changeScreenOpcao4 (MouseEvent event) {
     stage.setScene(telaOpcao4);
+  }
+
+  public static void changeScreenMenu(MouseEvent event){
+    stage.setScene(telaMenu);
   }
 }//Fim da classe Principal
