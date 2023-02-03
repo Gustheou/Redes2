@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControleMenu">
+   <children>
+      <ImageView fitHeight="461.0" fitWidth="807.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagens/Menu.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="138.0" layoutX="315.0" layoutY="136.0" onMouseClicked="#changeScreenOpcao1" pickOnBounds="true" preserveRatio="true" rotate="-22.8">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="101.0" layoutX="263.0" layoutY="209.0" onMouseClicked="#changeScreenOpcao2" pickOnBounds="true" preserveRatio="true" rotate="-9.5">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="130.0" layoutX="377.0" layoutY="246.0" onMouseClicked="#changeScreenOpcao3" pickOnBounds="true" preserveRatio="true" rotate="5.7">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="130.0" layoutX="300.0" layoutY="307.0" onMouseClicked="#changeScreenOpcao4" pickOnBounds="true" preserveRatio="true" rotate="26.6">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+</AnchorPane>
