@@ -15,11 +15,18 @@ public class ControleMenu {
 
   @FXML
   private ImageView imageAbout;
+  @FXML
+  private ImageView aboutBackButton;
+  @FXML
+  private ImageView aboutScreen;
+
   public ImageView soundImage;
   private Image aboutExited = new Image("Imagens/about.png");
   private Image aboutEntered = new Image ("Imagens/aboutClicked.png");
   private Image soundExited = new Image ("Imagens/sound_on.png");
   private Image soundEntered = new Image ("Imagens/sound_off.png");
+  private Image aboutReturnButtonExited = new Image ("Imagens/aboutScreenBackButton.png");
+  private Image aboutReturnButtonEntered = new Image ("Imagens/aboutScreenBackButtonOnMouse.png");
   private int somStatus = 1;//1 == ON
 
   
@@ -45,7 +52,8 @@ public class ControleMenu {
 
   @FXML
   public void imageAboutOnMouseClicked(MouseEvent event) {
-    
+    aboutScreen.setVisible(true);
+    aboutBackButton.setVisible(true);
   }
 
   @FXML
@@ -58,17 +66,33 @@ public class ControleMenu {
     imageAbout.setImage(aboutExited);
   }
 
+  @FXML
+  public void changeBackButtonEffectEntered(MouseEvent event) {
+    aboutBackButton.setImage(aboutReturnButtonEntered);
+  }
+
+  @FXML
+  public void changeBackButtonEffectExited(MouseEvent event) {
+    aboutBackButton.setImage(aboutReturnButtonExited);
+  }
+
+  @FXML
+  public void closeAboutMenuOnClicked(MouseEvent event) {
+    aboutScreen.setVisible(false);
+    aboutBackButton.setVisible(false);
+  }
+
   
   @FXML
   public void soundImageOnMouseClicked(MouseEvent event) {
     if (somStatus == 1) {
       somStatus = 0;
       soundImage.setImage(soundEntered);//Som off
-      Principal.mediaPlayer.setMute(true);
+      Principal.clip.stop();
     } else {
       somStatus = 1;
       soundImage.setImage(soundExited);//Som on
-      Principal.mediaPlayer.setMute(false);
+      Principal.clip.start();
     }
   }
 

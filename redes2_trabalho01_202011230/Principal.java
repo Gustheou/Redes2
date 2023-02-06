@@ -9,14 +9,17 @@
 
 import java.io.File;
 import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class Principal extends Application{
@@ -24,9 +27,8 @@ public class Principal extends Application{
   private static Scene telaMenu;
   private static Scene telaOpcao1, telaOpcao2, telaOpcao3, telaOpcao4;
 
-  private static String musicFile = "Songs/Persona5_song_menu.mp3";
-  private static Media sound;
-  public static MediaPlayer mediaPlayer;
+  private static File musicFile = new File ("Songs/Persona5_song_menu.wav");
+  public static Clip clip;
 
 /* ***************************************************************
 * Metodo: main
@@ -56,44 +58,56 @@ public class Principal extends Application{
     telaOpcao1 = new Scene (fxmlTelaOpcao1);    
 
     //Inicializando a musica
-    sound = new Media(new File(musicFile).toURI().toString());
-    mediaPlayer = new MediaPlayer(sound);
-    mediaPlayer.setVolume(0.125);
-    mediaPlayer.play();
-    mediaPlayer.getOnRepeat();
+    try {
+      AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+      clip = AudioSystem.getClip();
+      clip.open(audioStream);
+      clip.start();
+
+    } catch (Exception e) {
+      System.out.println("Excecao na musica: " + e.getMessage());
+    }
 
     cenario.setResizable(false);
-    cenario.getIcons().add(new Image("Imagens/host.png"));
+    cenario.getIcons().add(new Image("Imagens/Host.png"));
     cenario.setScene(telaMenu);
     cenario.show();
   }//Fim do metodo start
 
   public static void changeScreenOpcao1 (MouseEvent event) {
     stage.setScene(telaOpcao1);
-    mediaPlayer.stop();
+    clip.stop();
+    clip.close();
   }
 
   public static void changeScreenOpcao2 (MouseEvent event) {
     stage.setScene(telaOpcao2);
-    mediaPlayer.stop();
+    clip.stop();
+    clip.close();
   }
 
   public static void changeScreenOpcao3 (MouseEvent event) {
     stage.setScene(telaOpcao3);
-    mediaPlayer.stop();
+    clip.stop();
+    clip.close();
   }
 
   public static void changeScreenOpcao4 (MouseEvent event) {
     stage.setScene(telaOpcao4);
-    mediaPlayer.stop();
+    clip.stop();
+    clip.close();
   }
 
   public static void changeScreenMenu(MouseEvent event){
     stage.setScene(telaMenu);
-    sound = new Media(new File(musicFile).toURI().toString());
-    mediaPlayer = new MediaPlayer(sound);
-    mediaPlayer.setVolume(0.125);
-    mediaPlayer.play();
-    mediaPlayer.getOnRepeat();
+    try {
+      AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+      clip = AudioSystem.getClip();
+      clip.open(audioStream);
+      clip.start();
+
+    } catch (Exception e) {
+      System.out.println("Excecao na musica: " + e.getMessage());
+    }
   }
 }//Fim da classe Principal

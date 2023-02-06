@@ -9,14 +9,18 @@
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Semaphore;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 public class ControleOpcao1 implements Initializable {
 
@@ -29,19 +33,28 @@ public class ControleOpcao1 implements Initializable {
   private Image voltarOnMouseExited = new Image("Imagens/voltar.png");
   private Image soundExited = new Image ("Imagens/sound_on.png");
   private Image soundEntered = new Image ("Imagens/sound_off.png");
-  private int somStatus = 1; //1 == ON
+  private int somStatus = 1; //valor 1 corresponde ao som ON; valor 0 corresponde ao som OFF
 
-  private static String musicFile = "Songs/Persona5_song_opcao1.mp3";
-  private static Media sound;
-  private static MediaPlayer mediaPlayer;
+  File musicFile = new File ("Songs/Persona5_song_opcao1.wav");
+  public static Clip clip;
+
+  static Semaphore mutex = new Semaphore(8);
+  static int roteadorPermitido = 0;
+  static Pacote[] pacotes = new Pacote[8];
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    sound = new Media(new File(musicFile).toURI().toString());
-    mediaPlayer = new MediaPlayer(sound);
-    mediaPlayer.setVolume(0);
-    mediaPlayer.play();
-    mediaPlayer.stop();
+    try {
+      AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+      clip = AudioSystem.getClip();
+      clip.open(audioStream);
+      clip.start();
+      clip.stop();
+      clip.close();
+
+    } catch (Exception e) {
+      System.out.println("Excecao na musica: " + e.getMessage());
+    }
     
   }
 
@@ -49,14 +62,24 @@ public class ControleOpcao1 implements Initializable {
   public void iniciarImageOnMouseClicked(MouseEvent event) {
     iniciarImage.setVisible(false);
     voltarImage.setVisible(true);
-    sound = new Media(new File(musicFile).toURI().toString());
-    mediaPlayer = new MediaPlayer(sound);
-    mediaPlayer.setVolume(0.125);
-    mediaPlayer.play();
-    mediaPlayer.getOnRepeat();
+
+    try {
+      AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+      clip = AudioSystem.getClip();
+      clip.open(audioStream);
+      clip.start();
+
+    } catch (Exception e) {
+      System.out.println("Excecao na musica: " + e.getMessage());
+    }
+
     soundImage.setVisible(true);
 
-
+    //Instanciar as threads dos roteadores
+    for (int i = 0; i < 8; i++) {
+      pacotes[i] = new Pacote(i);
+      pacotes[i].start();
+    }
 
   }
 
@@ -75,8 +98,10 @@ public class ControleOpcao1 implements Initializable {
     iniciarImage.setVisible(true);
     soundImage.setVisible(false);
     soundImage.setImage(soundExited);//soundExited == som ligado
-    if (mediaPlayer.getStatus().toString().equals("PLAYING")){
-      mediaPlayer.stop();
+    if (clip.isActive()){
+      clip.stop();
+      clip.close();
+
     }
     Principal.changeScreenMenu(event);
   }
@@ -96,11 +121,11 @@ public class ControleOpcao1 implements Initializable {
     if (somStatus == 1) {
       somStatus = 0;
       soundImage.setImage(soundEntered);//Som off
-      mediaPlayer.setMute(true);
+      clip.stop();
     } else {
       somStatus = 1;
       soundImage.setImage(soundExited);//Som on
-      mediaPlayer.setMute(false);
+      clip.start();
     }
   }
 
@@ -130,4 +155,156 @@ public class ControleOpcao1 implements Initializable {
     
   }
 
+  public class Pacote extends Thread{
+    
+    final String imagemDoPacote = "Imagens/Package.jpg";
+    
+    private int id;
+
+    public Pacote (int id){
+      this.id = id;
+    }
+
+    @Override
+    public void run(){
+      try {
+        while (true){
+          if (ControleOpcao1.roteadorPermitido >= id){
+            ControleOpcao1.mutex.acquire(ControleOpcao1.roteadorPermitido);
+            roteamento(id);
+            Thread.sleep(3000);
+            ControleOpcao1.mutex.release(ControleOpcao1.roteadorPermitido);
+            ControleOpcao1.roteadorPermitido++;
+          } else {
+            Thread.sleep(1000);
+          }
+        }
+      } catch (InterruptedException ie) {
+        System.out.println("Excecao na run do pacote: "+ie.getMessage());
+      }
+      
+    }
+
+    public void roteamento (int roteador){
+      switch (roteador){
+        case 0: {//host to router 1
+          System.out.println("Host to router 1");
+          //chama método de animação e ele inicializa uma nova thread
+          animacao(123, 235, 218, 286);
+
+          break;
+        }
+        case 1: {//router 1 to host and router 2, 3 ,4
+          System.out.println("Roteador: " + roteador);
+          System.out.println("Roteador: "+roteador+"Enviando para host");
+          //metodo ?? O jeito vai ser implementar a animação
+          System.out.println("Roteador: "+roteador+"Enviando para roteador 2");
+          //metodo
+          System.out.println("Roteador: "+roteador+"Enviando para roteador 3");
+          //metodo
+          System.out.println("Roteador: "+roteador+"Enviando para roteador 4");
+          //metodo
+          break;
+        }
+        case 2: {//router 2 to router 1, 4
+          
+          break;
+        }
+        case 3: {// router 3 to 1, 5, 6
+          
+          break;
+        }
+        case 4: {// router 4 to 1, 3, 6, destination
+          
+          break;
+        }
+        case 5: {//router 5 to 3, 6, 7
+          
+          break;
+        }
+        case 6: {//router 6 to 3, 4, 5, 7
+          
+          break;
+        }
+        case 7: {//router 7 to 5, 6
+          
+          break;
+        }
+        default: {//none
+          
+          break;
+        }
+        
+      }
+    }
+
+    public void animacao(double xInicial, double yInicial, double xFinal, double yFinal){
+      Image cartaImage = new Image(imagemDoPacote);
+      ImageView carta = new ImageView(cartaImage);
+      carta.setFitWidth(29);
+      carta.setFitHeight(19);
+      carta.setX(xInicial);
+      carta.setY(yInicial);
+      carta.setVisible(true);
+      
+      
+
+      try {
+        //Os ifs abaixo são para que a movimentação seja realizada em qualquer situação
+        if ((xInicial > xFinal) && (yInicial > yFinal)) {
+          while((xInicial != xFinal) && (yInicial != yFinal)){
+          Thread.sleep((long) 25);
+          final double posicaoConstanteX = xInicial;
+          final double posicaoConstanteY = yInicial;
+          Platform.runLater( () -> carta.setX(posicaoConstanteX));
+          Platform.runLater(() -> carta.setY(posicaoConstanteY));
+          xInicial--;
+          yInicial--;
+          }
+        } else if ((xInicial < xFinal) && (yInicial < yFinal)) {
+          while((xInicial != xFinal) && (yInicial != yFinal)){
+          Thread.sleep((long) 25);
+          final double posicaoConstanteX = xInicial;
+          final double posicaoConstanteY = yInicial;
+          Platform.runLater( () -> carta.setX(posicaoConstanteX));
+          Platform.runLater(() -> carta.setY(posicaoConstanteY));
+          xInicial++;
+          yInicial++;
+          }
+        } else if ((xInicial > xFinal) && (yInicial < yFinal)){
+          while((xInicial != xFinal) && (yInicial != yFinal)){
+          Thread.sleep((long) 25);
+          final double posicaoConstanteX = xInicial;
+          final double posicaoConstanteY = yInicial;
+          Platform.runLater( () -> carta.setX(posicaoConstanteX));
+          Platform.runLater(() -> carta.setY(posicaoConstanteY));
+          xInicial--;
+          yInicial++;
+          }
+        } else {
+          while((xInicial != xFinal) && (yInicial != yFinal)){
+          Thread.sleep((long) 25);
+          final double posicaoConstanteX = xInicial;
+          final double posicaoConstanteY = yInicial;
+          Platform.runLater( () -> carta.setX(posicaoConstanteX));
+          Platform.runLater(() -> carta.setY(posicaoConstanteY));
+          xInicial++;
+          yInicial--;
+          }
+        }
+        // while((xInicial != xFinal) && (yInicial != yFinal)){
+        //   Thread.sleep((long) 25);
+        //   final double posicaoConstanteX = xInicial;
+        //   final double posicaoConstanteY = yInicial;
+        //   Platform.runLater( () -> carta.setX(posicaoConstanteX));
+        //   Platform.runLater(() -> carta.setY(posicaoConstanteY));
+        //   xInicial++;
+        //   yInicial--;
+        // }
+      } catch (InterruptedException ie) {
+        System.out.println("Excecao na animacao: " + ie.getMessage());
+      }
+    }
+  }
 }
+
