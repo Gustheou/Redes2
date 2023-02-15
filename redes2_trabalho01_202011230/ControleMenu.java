@@ -7,26 +7,14 @@
 * Funcao...........: 
 *************************************************************** */
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class ControleMenu {
 
   @FXML
-  private ImageView imageAbout;
-  @FXML
-  private ImageView aboutBackButton;
-  @FXML
-  private ImageView aboutScreen;
+  private ImageView imageAbout, aboutBackButton, aboutScreen, soundImage;
 
-  public ImageView soundImage;
-  private Image aboutExited = new Image("Imagens/about.png");
-  private Image aboutEntered = new Image ("Imagens/aboutClicked.png");
-  private Image soundExited = new Image ("Imagens/sound_on.png");
-  private Image soundEntered = new Image ("Imagens/sound_off.png");
-  private Image aboutReturnButtonExited = new Image ("Imagens/aboutScreenBackButton.png");
-  private Image aboutReturnButtonEntered = new Image ("Imagens/aboutScreenBackButtonOnMouse.png");
   private int somStatus = 1;//1 == ON
 
   
@@ -58,22 +46,22 @@ public class ControleMenu {
 
   @FXML
   public void imageAboutOnMouseEntered(MouseEvent event) {
-    imageAbout.setImage(aboutEntered);
+    imageAbout.setImage(Gallery.aboutEntered);
   }
 
   @FXML
   public void imageAboutOnMouseExited(MouseEvent event) {
-    imageAbout.setImage(aboutExited);
+    imageAbout.setImage(Gallery.aboutExited);
   }
 
   @FXML
   public void changeBackButtonEffectEntered(MouseEvent event) {
-    aboutBackButton.setImage(aboutReturnButtonEntered);
+    aboutBackButton.setImage(Gallery.aboutReturnButtonEntered);
   }
 
   @FXML
   public void changeBackButtonEffectExited(MouseEvent event) {
-    aboutBackButton.setImage(aboutReturnButtonExited);
+    aboutBackButton.setImage(Gallery.aboutReturnButtonExited);
   }
 
   @FXML
@@ -87,11 +75,11 @@ public class ControleMenu {
   public void soundImageOnMouseClicked(MouseEvent event) {
     if (somStatus == 1) {
       somStatus = 0;
-      soundImage.setImage(soundEntered);//Som off
+      soundImage.setImage(Gallery.soundEntered);//Som off
       Principal.clip.stop();
     } else {
       somStatus = 1;
-      soundImage.setImage(soundExited);//Som on
+      soundImage.setImage(Gallery.soundExited);//Som on
       Principal.clip.start();
     }
   }
@@ -99,18 +87,18 @@ public class ControleMenu {
   @FXML
   public void soundImageOnMouseEntered(MouseEvent event) {
     if (somStatus == 1){
-      soundImage.setImage(soundEntered);
+      soundImage.setImage(Gallery.soundEntered);
     } else {
-      soundImage.setImage(soundExited);
+      soundImage.setImage(Gallery.soundExited);
     }
   }
 
   @FXML
   public void soundImageOnMouseExited(MouseEvent event) {
     if (somStatus == 1){
-      soundImage.setImage(soundExited);
+      soundImage.setImage(Gallery.soundExited);
     } else {
-      soundImage.setImage(soundEntered);
+      soundImage.setImage(Gallery.soundEntered);
     }
   }
 
