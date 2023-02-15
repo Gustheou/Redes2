@@ -14,7 +14,7 @@
       </ImageView>
       <ImageView fx:id="destinoImage" fitHeight="150.0" fitWidth="200.0" layoutX="376.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Imagens/personaBeforePackage.png" />
+            <Image url="@Imagens/PersonaBeforePackage.png" />
          </image>
       </ImageView>
       <ImageView fx:id="voltarImage" fitHeight="81.0" fitWidth="92.0" layoutX="512.0" layoutY="371.0" onMouseClicked="#voltarImageOnMouseClicked" onMouseEntered="#voltarImageOnMouseEntered" onMouseExited="#voltarImageOnMouseExited" pickOnBounds="true" preserveRatio="true">
