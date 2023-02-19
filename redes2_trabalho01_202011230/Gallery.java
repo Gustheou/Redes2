@@ -20,4 +20,6 @@ public abstract class Gallery {
   public static final Image aboutEntered = new Image ("Imagens/AboutClicked.png");
   public static final Image aboutReturnButtonExited = new Image ("Imagens/AboutScreenBackButton.png");
   public static final Image aboutReturnButtonEntered = new Image ("Imagens/AboutScreenBackButtonOnMouse.png");
+  public static final Image personaRollOut = new Image ("Imagens/PersonaAfterPackage.png");
+  public static final Image personaStandBy = new Image (Gallery.class.getResourceAsStream("Imagens/PersonaBeforePackage.png"));
 }

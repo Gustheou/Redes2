@@ -53,4 +53,51 @@ public class AudioFiles {
     }
   }
   
+  public static void audioInitializeOpcao2(File musicFile, Clip clip){
+    try {
+      AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+      ControleOpcao2.clip = AudioSystem.getClip();
+      ControleOpcao2.clip.open(audioStream);
+      ControleOpcao2.clip.start();
+      ControleOpcao2.clip.stop();
+      ControleOpcao2.clip.close();
+    } catch (Exception e) {
+      System.out.println("Excecao na musica: " + e.getMessage());
+    }
+  }
+
+  public static void audioStartButtonOpcao2(File musicFile, Clip clip){
+    try {
+      AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+      ControleOpcao2.clip = AudioSystem.getClip();
+      ControleOpcao2.clip.open(audioStream);
+      ControleOpcao2.clip.start();
+    } catch (Exception e) {
+      System.out.println("Excecao na musica: " + e.getMessage());
+    }
+  }
+
+  public static void audioInitializeOpcao3(File musicFile, Clip clip){
+    try {
+      AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+      ControleOpcao3.clip = AudioSystem.getClip();
+      ControleOpcao3.clip.open(audioStream);
+      ControleOpcao3.clip.start();
+      ControleOpcao3.clip.stop();
+      ControleOpcao3.clip.close();
+    } catch (Exception e) {
+      System.out.println("Excecao na musica: " + e.getMessage());
+    }
+  }
+
+  public static void audioStartButtonOpcao3(File musicFile, Clip clip){
+    try {
+      AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+      ControleOpcao3.clip = AudioSystem.getClip();
+      ControleOpcao3.clip.open(audioStream);
+      ControleOpcao3.clip.start();
+    } catch (Exception e) {
+      System.out.println("Excecao na musica: " + e.getMessage());
+    }
+  }
 }

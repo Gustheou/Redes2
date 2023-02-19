@@ -2,7 +2,7 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 03/02/2023
-* Ultima alteracao.: /02/2023
+* Ultima alteracao.: 18/02/2023
 * Nome.............: ControleMenu
 * Funcao...........: 
 *************************************************************** */
@@ -25,17 +25,17 @@ public class ControleMenu {
 
   @FXML
   public void changeScreenOpcao2(MouseEvent event) {
-
+    Principal.changeScreenOpcao2(event);
   }
 
   @FXML
   public void changeScreenOpcao3(MouseEvent event) {
-
+    Principal.changeScreenOpcao3(event);
   }
 
   @FXML
   public void changeScreenOpcao4(MouseEvent event) {
-
+    // Principal.changeScreenOpcao4(event);
   }
 
   @FXML

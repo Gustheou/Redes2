@@ -6,88 +6,100 @@
 * Nome.............: Pacote
 * Funcao...........: 
 *************************************************************** */
-import javafx.application.Platform;
+import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public class Pacote extends Thread{
     
-  public int contadorDePacote = 0;
+  public static int contadorDePacote = 0;
   private int roteador_origem;
   private int roteador_destino;
-
-  private final int posicaoXDoRoteador1 = 218;    private final int posicaoYDoRoteador1 = 286;
-  private final int posicaoXDoRoteador2 = 000;    private final int posicaoYDoRoteador2 = 000;
-  private final int posicaoXDoRoteador3 = 000;    private final int posicaoYDoRoteador3 = 000;
-  private final int posicaoXDoRoteador4 = 000;    private final int posicaoYDoRoteador4 = 000;
-  private final int posicaoXDoRoteador5 = 000;    private final int posicaoYDoRoteador5 = 000;
-  private final int posicaoXDoRoteador6 = 000;    private final int posicaoYDoRoteador6 = 000;
-  private final int posicaoXDoRoteador7 = 000;    private final int posicaoYDoRoteador7 = 000;
-  
-  private final int posicaoXDoHost = 0;         private final int posicaoYDoHost = 0;
-
   private ImageView carta;
 
   public Pacote (int roteador_origem, ImageView carta, int roteador_destino){
     this.roteador_origem = roteador_origem;
     this.roteador_destino = roteador_destino;
-    // this.carta = carta;
-    carta = new ImageView(Gallery.carta);
+    this.carta = carta;
     carta.setFitWidth(19);
     carta.setFitHeight(29);
-    this.carta = carta;
-    contadorDePacote++;
   }
 
+/* ***************************************************************
+* Metodo: run
+* Funcao: Iniciar a thread
+* Parametros:
+* Retorno: void
+*************************************************************** */
   @Override
   public void run() {
-
+    try {
+      if (roteador_origem != 0){
+        Thread.sleep(roteadorWaiting(roteador_origem));
+      }
+      while(true){
+        System.out.println("Pacotes enviados: " + contadorDePacote);
+        roteamentoOrigemOpcao1(roteador_origem, roteador_destino);
+        if (roteador_origem != 0){
+          Thread.sleep(roteadorWaiting(0));
+        }else
+        Thread.sleep(4000);
+      }
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
-  public void roteamentoOpcao1 (int roteadorDeOrigem){
+/* ***************************************************************
+* Metodo: roteamentoOrigemOpcao1
+* Funcao: definir qual é o roteador de origem para enviar o pacote
+* Parametros: roteadorDeOrigem = roteador inicial, roteadorDeDestino = roteador final
+* Retorno: void
+*************************************************************** */
+  public void roteamentoOrigemOpcao1 (int roteadorDeOrigem, int roteadorDeDestino){
+    int [] coordenadas_origem = TabelaDeRoteamento.tabela_de_roteamento(roteadorDeOrigem);
+    int [] coordenadas_destino = TabelaDeRoteamento.tabela_de_roteamento(roteadorDeDestino);
     switch (roteadorDeOrigem){
       case 0: {//host to router 1,2,3
-        System.out.println("Host to router 1");
-        //chama método de animação e ele inicializa uma nova thread
-        enviar_pacote(posicaoXDoHost, posicaoYDoHost, posicaoXDoRoteador1, posicaoYDoRoteador1);
-        enviar_pacote(posicaoXDoHost, posicaoYDoHost, posicaoXDoRoteador2, posicaoYDoRoteador2);
-        enviar_pacote(posicaoXDoHost, posicaoYDoHost, posicaoXDoRoteador3, posicaoYDoRoteador3);
-        contadorDePacote += 3;
-        
+        enviar_pacote(coordenadas_origem[0], coordenadas_origem[1], coordenadas_destino[0], coordenadas_destino[1]);
+        contadorDePacote += 1;
         break;
       }
-      case 1: {//router 1 to host and router 2, 3 ,4
-        
-        contadorDePacote +=3;
+      case 1: {//router 1 to host and router 2, 5 ,6
+        enviar_pacote(coordenadas_origem[0], coordenadas_origem[1], coordenadas_destino[0], coordenadas_destino[1]);
+        contadorDePacote +=1;
         break;
       }
-      case 2: {//router 2 to router 1, 4
-        
-        contadorDePacote+=2;
+      case 2: {//router 2 to host and router 1,3,4
+        enviar_pacote(coordenadas_origem[0], coordenadas_origem[1], coordenadas_destino[0], coordenadas_destino[1]); 
+        contadorDePacote+=1;
         break;
       }
-      case 3: {// router 3 to 1, 5, 6
-        
-        contadorDePacote+=3;
+      case 3: {// router 3 to host and router 2, 4
+        enviar_pacote(coordenadas_origem[0], coordenadas_origem[1], coordenadas_destino[0], coordenadas_origem[1]);
+        contadorDePacote+=1;
         break;
       }
-      case 4: {// router 4 to 1, 3, 6, destination
-        
-        contadorDePacote+=3;
+      case 4: {// router 4 to 2, 3, 6, destination
+        enviar_pacote(coordenadas_origem[0], coordenadas_origem[1], coordenadas_destino[0], coordenadas_destino[1]);
+
+        contadorDePacote+=1;
         break;
       }
-      case 5: {//router 5 to 3, 6, 7
-        
-        contadorDePacote+=3;
+      case 5: {//router 5 to 1, 6, 7
+        enviar_pacote(coordenadas_origem[0], coordenadas_origem[1], coordenadas_destino[0], coordenadas_destino[1]);
+        contadorDePacote+=1;
         break;
       }
-      case 6: {//router 6 to 3, 4, 5, 7
-        
-        contadorDePacote+=4;
+      case 6: {//router 6 to 1, 4, 5, 7
+        enviar_pacote(coordenadas_origem[0], coordenadas_origem[1], coordenadas_destino[0], coordenadas_destino[1]);
+        contadorDePacote+=1;
         break;
       }
       case 7: {//router 7 to 5, 6
-        
-        contadorDePacote+=2;
+        enviar_pacote(coordenadas_origem[0], coordenadas_origem[1], coordenadas_destino[0], coordenadas_destino[1]);
+        contadorDePacote+=1;
         break;
       }
       default: {//none
@@ -98,62 +110,73 @@ public class Pacote extends Thread{
     }
   }
 
-  public void enviar_pacote(double xInicial, double yInicial, double xFinal, double yFinal){
-    /* Roteador de origem
-     * Roteador de destino
-     * Animacao
-     */
+/* ***************************************************************
+* Metodo: roteadorWaiting
+* Funcao: Fazer o roteador aguardar
+* Parametros: roteadorDeOrigem = roteador inicial, roteadorDeDestino = roteador final
+* Retorno: tempo de espera de cada roteador
+*************************************************************** */
+  public long roteadorWaiting(int roteador_origem) throws InterruptedException{
+    switch(roteador_origem){
+      case 0: {
+        return 2200;
+      }
+      case 1,2,3: {
+        return 2000;
+      }
+      case 4, 5, 6: {
+        return 4000;
+      }
+      case 7: {
+        return 6000;
+      }
+      default: {
+        return 10000;
+      }
+    }
+  }  
 
-    
-    carta.setVisible(false);
+/* ***************************************************************
+* Metodo: enviar_pacote
+* Funcao: definir a visibilidade do pacote e enviar para determinada coordenada
+* Parametros: coordenadas iniciais e finais
+* Retorno: void
+*************************************************************** */
+  public void enviar_pacote(double xInicial, double yInicial, double xFinal, double yFinal){
+    carta.setVisible(true);
+    carta.setLayoutX(0);
+    carta.setLayoutY(0);
+    carta.setX(0);
+    carta.setY(0);
+
+    animacaoDoPacote(xInicial, yInicial, xFinal, yFinal);
   }
 
+/* ***************************************************************
+* Metodo: animacaoDoPacote
+* Funcao: fazer a animacao do pacote
+* Parametros: coordenadas iniciais e finais
+* Retorno: void
+*************************************************************** */
   public void animacaoDoPacote (double xInicial, double yInicial, double xFinal, double yFinal) {
-    try {
-      //Os ifs abaixo são para que a movimentação seja realizada em qualquer situação
-      if ((xInicial > xFinal) && (yInicial > yFinal)) {
-        while((xInicial != xFinal) && (yInicial != yFinal)){
-        Thread.sleep((long) 25);
-        final double posicaoConstanteX = xInicial;
-        final double posicaoConstanteY = yInicial;
-        Platform.runLater( () -> carta.setX(posicaoConstanteX));
-        Platform.runLater(() -> carta.setY(posicaoConstanteY));
-        xInicial--;
-        yInicial--;
-        }
-      } else if ((xInicial < xFinal) && (yInicial < yFinal)) {
-        while((xInicial != xFinal) && (yInicial != yFinal)){
-        Thread.sleep((long) 25);
-        final double posicaoConstanteX = xInicial;
-        final double posicaoConstanteY = yInicial;
-        Platform.runLater( () -> carta.setX(posicaoConstanteX));
-        Platform.runLater(() -> carta.setY(posicaoConstanteY));
-        xInicial++;
-        yInicial++;
-        }
-      } else if ((xInicial > xFinal) && (yInicial < yFinal)){
-        while((xInicial != xFinal) && (yInicial != yFinal)){
-        Thread.sleep((long) 25);
-        final double posicaoConstanteX = xInicial;
-        final double posicaoConstanteY = yInicial;
-        Platform.runLater( () -> carta.setX(posicaoConstanteX));
-        Platform.runLater(() -> carta.setY(posicaoConstanteY));
-        xInicial--;
-        yInicial++;
-        }
-      } else {
-        while((xInicial != xFinal) && (yInicial != yFinal)){
-        Thread.sleep((long) 25);
-        final double posicaoConstanteX = xInicial;
-        final double posicaoConstanteY = yInicial;
-        Platform.runLater( () -> carta.setX(posicaoConstanteX));
-        Platform.runLater(() -> carta.setY(posicaoConstanteY));
-        xInicial++;
-        yInicial--;
-        }
-      }
-    } catch (InterruptedException ie) {
-      System.out.println("Excecao na animacao: " + ie.getMessage());
-    }
+    TranslateTransition animacao = new TranslateTransition(Duration.millis(2000), carta);
+    animacao.setFromX(xInicial);
+    animacao.setFromY(yInicial);
+    animacao.setToX(xFinal);
+    animacao.setToY(yFinal);
+    animacao.setOnFinished(event -> {
+      carta.setVisible(false);
+      if (xFinal == 454 && yFinal == 386)
+        ControleOpcao1.destinoImage.setImage(null);
+    });
+    animacao.play();
+  }
+
+  public int getRoteadorDestino () {
+    return roteador_destino;
+  }
+
+  public ImageView getCarta(){
+    return carta;
   }
 }

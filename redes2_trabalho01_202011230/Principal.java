@@ -50,10 +50,13 @@ public class Principal extends Application{
     stage = cenario;
     cenario.setTitle("Algoritmo de roteamento");
     Parent fxmlTelaInicial = FXMLLoader.load(getClass().getResource("telaMenu.fxml"));
-    telaMenu = new Scene (fxmlTelaInicial);
     Parent fxmlTelaOpcao1 = FXMLLoader.load(getClass().getResource("opcao1.fxml"));
+    Parent fxmlTelaOpcao2 = FXMLLoader.load(getClass().getResource("opcao2.fxml"));
+    Parent fxmlTelaOpcao3 = FXMLLoader.load(getClass().getResource("opcao3.fxml"));
+    telaMenu = new Scene (fxmlTelaInicial);
     telaOpcao1 = new Scene (fxmlTelaOpcao1);    
-    
+    telaOpcao2 = new Scene(fxmlTelaOpcao2);
+    telaOpcao3 = new Scene(fxmlTelaOpcao3);
 
     cenario.getIcons().add(new Image("Imagens/Host.png"));
     cenario.setScene(telaMenu);
