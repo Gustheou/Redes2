@@ -2,7 +2,7 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 13/02/2023
-* Ultima alteracao.: /02/2023
+* Ultima alteracao.: 18/02/2023
 * Nome.............: Gallery
 * Funcao...........: Guardar as imagens que são chamadas
 *************************************************************** */

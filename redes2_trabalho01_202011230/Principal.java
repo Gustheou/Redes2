@@ -2,9 +2,9 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 02/02/2023
-* Ultima alteracao.: /02/2023
+* Ultima alteracao.: 19/02/2023
 * Nome.............: Principal
-* Funcao...........: 
+* Funcao...........: Exibir as telas e realizar o controle da musica
 *************************************************************** */
 
 import java.io.File;
@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -61,6 +62,7 @@ public class Principal extends Application{
     cenario.getIcons().add(new Image("Imagens/Host.png"));
     cenario.setScene(telaMenu);
     cenario.show();
+    showDialogStart();
   }//Fim do metodo start
 
   public static void changeScreenOpcao1 (MouseEvent event) {
@@ -86,5 +88,11 @@ public class Principal extends Application{
   public static void changeScreenMenu(MouseEvent event){
     stage.setScene(telaMenu);
     AudioFiles.audioInitiliazeMain(musicFile, clip);
+  }
+
+  public void showDialogStart(){
+    Alert dialogInfo = new Alert(Alert.AlertType.WARNING);
+    dialogInfo.setContentText("Existe um video no diretorio chamado intro.mp4, por favor assista-o antes de prosseguir.\nNao se esqueca de desabilitar o som clicando no icone Sound ON");
+    dialogInfo.showAndWait();
   }
 }//Fim da classe Principal

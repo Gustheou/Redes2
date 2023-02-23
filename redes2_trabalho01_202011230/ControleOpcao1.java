@@ -2,9 +2,9 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 03/02/2023
-* Ultima alteracao.: /02/2023
+* Ultima alteracao.: 19/02/2023
 * Nome.............: ControleOpcao1
-* Funcao...........: 
+* Funcao...........: Realizar o controle do algoritmo de inundacao referente a opcao1
 *************************************************************** */
 import java.io.File;
 import java.net.URL;

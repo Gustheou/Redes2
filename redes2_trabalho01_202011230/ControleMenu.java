@@ -2,18 +2,23 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 03/02/2023
-* Ultima alteracao.: 18/02/2023
+* Ultima alteracao.: 19/02/2023
 * Nome.............: ControleMenu
-* Funcao...........: 
+* Funcao...........: Controlar as opcoes e icones do menu
 *************************************************************** */
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 public class ControleMenu {
 
   @FXML
   private ImageView imageAbout, aboutBackButton, aboutScreen, soundImage;
+
+  @FXML
+  private Pane infoPane;
 
   private int somStatus = 1;//1 == ON
 
@@ -36,12 +41,20 @@ public class ControleMenu {
   @FXML
   public void changeScreenOpcao4(MouseEvent event) {
     // Principal.changeScreenOpcao4(event);
+    showDialog();
+  }
+
+  public void showDialog(){
+    Alert dialogInfo = new Alert(Alert.AlertType.ERROR);
+    dialogInfo.setContentText("Algoritmo nao encontrado.");
+    dialogInfo.showAndWait();
   }
 
   @FXML
   public void imageAboutOnMouseClicked(MouseEvent event) {
     aboutScreen.setVisible(true);
     aboutBackButton.setVisible(true);
+    infoPane.setVisible(true);
   }
 
   @FXML
@@ -68,6 +81,7 @@ public class ControleMenu {
   public void closeAboutMenuOnClicked(MouseEvent event) {
     aboutScreen.setVisible(false);
     aboutBackButton.setVisible(false);
+    infoPane.setVisible(false);
   }
 
   

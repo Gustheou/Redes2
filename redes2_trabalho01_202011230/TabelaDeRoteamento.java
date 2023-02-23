@@ -2,7 +2,7 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 18/02/2023
-* Ultima alteracao.: /02/2023
+* Ultima alteracao.: 18/02/2023
 * Nome.............: TabelaDeRoteamento
 * Funcao...........: Armazenar as coordenadas dos roteadores
 *************************************************************** */

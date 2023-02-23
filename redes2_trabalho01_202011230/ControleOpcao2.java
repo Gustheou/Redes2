@@ -3,9 +3,9 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 18/02/2023
-* Ultima alteracao.: /02/2023
+* Ultima alteracao.: 19/02/2023
 * Nome.............: ControleOpcao2
-* Funcao...........: 
+* Funcao...........: Implementacao do algoritmo de inundacao referente a opcao 02 (enviar para todos exceto ao roteador que recebeu)
 *************************************************************** */
 import java.io.File;
 import java.net.URL;
@@ -15,6 +15,7 @@ import javax.sound.sampled.Clip;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -49,15 +50,35 @@ public class ControleOpcao2 implements Initializable {
     AudioFiles.audioInitializeOpcao2(musicFile, clip);
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: iniciarImageOnMouseClicked
+   * Funcao: Inicializar a musica e o algoritmo
+   * Parametros: event = o mouse em si
+   * Retorno: void
+   */
   @FXML
-  void iniciarImageOnMouseClicked(MouseEvent event) {
+  public void iniciarImageOnMouseClicked(MouseEvent event) {
     iniciarImage.setVisible(false);
     voltarImage.setVisible(true);
     soundImage.setVisible(true);
     AudioFiles.audioStartButtonOpcao2(musicFile, clip);
     Subrede subrede = new Subrede();
     definir_roteadores(subrede);
+    showDialog();
+  }
 
+  /*
+   * ***************************************************************
+   * Metodo: showDialog
+   * Funcao: Mostrar imagem na tela
+   * Parametros: void
+   * Retorno: void
+   */
+    public void showDialog(){
+      Alert dialogInfo = new Alert(Alert.AlertType.ERROR);
+      dialogInfo.setContentText("Algoritmo em desenvolvimento.");
+      dialogInfo.showAndWait();
     }
 
   /*

@@ -2,9 +2,9 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 13/02/2023
-* Ultima alteracao.: /02/2023
+* Ultima alteracao.: 19/02/2023
 * Nome.............: Pacote
-* Funcao...........: 
+* Funcao...........: Realizar a movimentacao, definir origem e destino do pacote
 *************************************************************** */
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
@@ -121,10 +121,22 @@ public class Pacote extends Thread{
       case 0: {
         return 2200;
       }
-      case 1,2,3: {
+      case 1: {
         return 2000;
       }
-      case 4, 5, 6: {
+      case 2: {
+        return 2000;
+      }
+      case 3: {
+        return 2000;
+      }
+      case 4: {
+        return 4000;
+      }
+      case 5: {
+        return 4000;
+      }
+      case 6: {
         return 4000;
       }
       case 7: {
