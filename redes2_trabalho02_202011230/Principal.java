@@ -2,11 +2,10 @@
 * Autor............: Gustavo Pereira Nunes
 * Matricula........: 202011230
 * Inicio...........: 23/02/2023
-* Ultima alteracao.: /02/2023
+* Ultima alteracao.: 05/03/2023
 * Nome.............: Principal
 * Funcao...........: Exibir as telas
 *************************************************************** */
-
 import java.io.IOException;
 
 import Controller.ControleMenu;
@@ -50,7 +49,6 @@ public class Principal extends Application{
     cenario.setScene(telaMenu);
     cenario.setResizable(false);
     cenario.show();
-    // showDialogStart();
   }//Fim do metodo start
-
+  
 }//Fim da classe Principal

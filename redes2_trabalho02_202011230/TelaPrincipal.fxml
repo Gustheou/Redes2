@@ -34,13 +34,10 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ImageView fitHeight="38.0" fitWidth="149.0" layoutX="14.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Imagens/BotaoRefazer.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
+      <Label fx:id="pesoLabel" layoutX="14.0" layoutY="350.0" textFill="#48463a">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
